@@ -11,7 +11,7 @@ ARG GROUP=app
 ARG UID=8888
 ARG GID=8888
 ARG APP_HOME=/data/app
-ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.11/gosu-amd64
+ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.14/gosu-amd64
 
 # copy script
 COPY docker-entrypoint.sh /

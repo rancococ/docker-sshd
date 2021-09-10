@@ -76,7 +76,7 @@ docker build --rm \
              --add-host github-cloud.s3.amazonaws.com:52.216.166.91 \
              --add-host github-production-release-asset-2e65be.s3.amazonaws.com:54.231.114.66 \
              --add-host github-production-release-asset-2e65be.s3.amazonaws.com:52.216.165.147 \
-             --build-arg GOSU_URL=https://github.com/tianon/gosu/releases/download/1.11/gosu-amd64 \
+             --build-arg GOSU_URL=https://github.com/tianon/gosu/releases/download/1.14/gosu-amd64 \
              -t sshd:1.0.0-centos \
              -f Dockerfile .
 }
