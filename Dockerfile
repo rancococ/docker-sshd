@@ -29,7 +29,7 @@ RUN \rm -rf /etc/yum.repos.d/*.repo && \
     rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${CENTOS_VER} && \
     rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-${CENTOS_VER} && \
     sed -i 's@override_install_langs=en_US.utf8@#override_install_langs=en_US.utf8@g' "/etc/yum.conf" && \
-    yum install -y curl bash bash-completion passwd openssl openssh-server wget net-tools gettext zip unzip ncurses fontconfig && \
+    yum install -y curl bash bash-completion passwd openssl openssh-server wget net-tools gettext zip unzip ncurses fontconfig dos2unix && \
     yum reinstall -y glibc-common && \
     yum clean all && \rm -rf /var/lib/{cache,log} /var/log/lastlog && \
     ssh-keygen -q -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key -N '' && \
