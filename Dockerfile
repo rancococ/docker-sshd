@@ -11,12 +11,12 @@ ARG GROUP=app
 ARG UID=8888
 ARG GID=8888
 ARG APP_HOME=/data/app
-ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.14/gosu-amd64
+ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.17/gosu-amd64
 
 # copy script
 COPY docker-entrypoint.sh /
 
-# install repositories and packages : busybox-suid curl bash bash-completion openssh wget net-tools gettext zip unzip tar tzdata ncurses procps ttf-dejavu
+# install repositories and packages : busybox-suid curl bash bash-completion openssh wget net-tools gettext zip unzip tar tzdata ncurses procps ttf-dejavu dos2unix
 RUN echo -e "https://mirrors.huaweicloud.com/alpine/${ALPINE_VER}/main\nhttps://mirrors.huaweicloud.com/alpine/${ALPINE_VER}/community" > /etc/apk/repositories && \
     apk update && apk add busybox-suid curl bash bash-completion openssh wget net-tools gettext zip unzip tar tzdata ncurses procps ttf-dejavu dos2unix && \
     \rm -rf /var/cache/apk/* && \
