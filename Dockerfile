@@ -11,12 +11,12 @@ ARG GROUP=app
 ARG UID=8888
 ARG GID=8888
 ARG APP_HOME=/data/app
-ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.14/gosu-amd64
+ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.17/gosu-amd64
 
 # copy script
 COPY docker-entrypoint.sh /
 
-# install repositories and packages : curl bash bash-completion passwd openssl openssh wget net-tools gettext zip unzip ncurses fontconfig
+# install repositories and packages : curl bash bash-completion passwd openssl openssh wget net-tools gettext zip unzip ncurses fontconfig dos2unix
 RUN \rm -rf /etc/yum.repos.d/*.repo && \
     curl -s -o /etc/yum.repos.d/centos.repo http://mirrors.aliyun.com/repo/Centos-${CENTOS_VER}.repo && \
     curl -s -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-${CENTOS_VER}.repo && \
