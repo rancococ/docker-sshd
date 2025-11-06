@@ -1,37 +1,26 @@
-# from registry.cn-hangzhou.aliyuncs.com/rancococ/centos:7-utf8
-FROM registry.cn-hangzhou.aliyuncs.com/rancococ/centos:7-utf8
+# from openeuler/openeuler:22.03-lts-sp4
+FROM openeuler/openeuler:22.03-lts-sp4
 
 # maintainer
 MAINTAINER "rancococ" <rancococ@qq.com>
 
 # set arg info
-ARG CENTOS_VER=7
 ARG USER=app
 ARG GROUP=app
 ARG UID=8888
 ARG GID=8888
 ARG APP_HOME=/data/app
-ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.17/gosu-amd64
+ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.19/gosu-amd64
 
 # copy script
 COPY docker-entrypoint.sh /
 
-# install repositories and packages : curl bash bash-completion passwd openssl openssh wget net-tools gettext zip unzip ncurses fontconfig dos2unix
-RUN \rm -rf /etc/yum.repos.d/*.repo && \
-    curl -s -o /etc/yum.repos.d/centos.repo http://mirrors.aliyun.com/repo/Centos-${CENTOS_VER}.repo && \
-    curl -s -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-${CENTOS_VER}.repo && \
-    sed -i '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/centos.repo && \
-    sed -i '/mirrors.cloud.aliyuncs.com/d' /etc/yum.repos.d/centos.repo && \
-    yum clean all && yum makecache && \
-    \rm -rf /etc/pki/rpm-gpg/* && \
-    curl -s -o /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${CENTOS_VER} https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-${CENTOS_VER} && \
-    curl -s -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-${CENTOS_VER} https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-${CENTOS_VER} && \
-    rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${CENTOS_VER} && \
-    rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-${CENTOS_VER} && \
-    sed -i 's@override_install_langs=en_US.utf8@#override_install_langs=en_US.utf8@g' "/etc/yum.conf" && \
-    yum install -y curl bash bash-completion passwd openssl openssh-server wget net-tools gettext zip unzip ncurses fontconfig dos2unix && \
-    yum reinstall -y glibc-common && \
-    yum clean all && \rm -rf /var/lib/{cache,log} /var/log/lastlog && \
+# install repositories and packages : curl bash bash-completion passwd openssl openssh wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3
+RUN cp /etc/yum.repos.d/openEuler.repo /etc/yum.repos.d/openEuler.repo.backup
+    sed -i "s#repo.openeuler.org#mirrors.aliyun.com/openeuler#g" /etc/yum.repos.d/openEuler.repo
+    dnf clean all && dnf makecache && \
+    dnf install -y curl bash bash-completion passwd openssl openssh-server wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3 && \
+    dnf clean all && \rm -rf /var/lib/{cache,log} /var/log/lastlog && \
     ssh-keygen -q -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key -N '' && \
     ssh-keygen -q -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N '' && \
     ssh-keygen -t dsa -f /etc/ssh/ssh_host_ed25519_key  -N '' && \

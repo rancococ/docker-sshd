@@ -47,6 +47,6 @@ base_dir="$( cd -P "$( dirname "$source" )" && pwd )"
 cd ${base_dir}
 
 # run default command
-docker run -it --rm --name sshd-centos sshd:1.0.0-centos
+docker run -it --rm --name sshd-openeuler sshd:1.0.0-openeuler
 # run sshd
-docker run -it --rm --name sshd-centos -p 10022:22 sshd:1.0.0-centos ""
+docker run -it --rm --name sshd-openeuler -p 10022:22 sshd:1.0.0-openeuler ""
