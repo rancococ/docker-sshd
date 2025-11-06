@@ -1,5 +1,5 @@
-# from registry.cdjdgm.com/openeuler/openeuler:22.03-lts-sp4
-FROM registry.cdjdgm.com/openeuler/openeuler:22.03-lts-sp4
+# from quay.io/openeuler/openeuler:22.03-lts-sp4
+FROM quay.io/openeuler/openeuler:22.03-lts-sp4
 
 # maintainer
 MAINTAINER "rancococ" <rancococ@qq.com>
