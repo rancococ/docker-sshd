@@ -16,8 +16,8 @@ ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.19/gosu-amd64
 COPY docker-entrypoint.sh /
 
 # install repositories and packages : curl bash bash-completion passwd openssl openssh wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3
-RUN cp /etc/yum.repos.d/openEuler.repo /etc/yum.repos.d/openEuler.repo.backup
-    sed -i "s#repo.openeuler.org#mirrors.aliyun.com/openeuler#g" /etc/yum.repos.d/openEuler.repo
+RUN cp /etc/yum.repos.d/openEuler.repo /etc/yum.repos.d/openEuler.repo.backup && \
+    sed -i "s#repo.openeuler.org#mirrors.aliyun.com/openeuler#g" /etc/yum.repos.d/openEuler.repo && \
     dnf clean all && dnf makecache && \
     dnf install -y curl bash bash-completion passwd openssl openssh-server wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3 && \
     dnf clean all && \rm -rf /var/lib/{cache,log} /var/log/lastlog && \
