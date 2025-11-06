@@ -1,5 +1,5 @@
-# from openeuler/openeuler:22.03-lts-sp4
-FROM openeuler/openeuler:22.03-lts-sp4
+# from registry.cdjdgm.com/openeuler/openeuler:22.03-lts-sp4
+FROM registry.cdjdgm.com/openeuler/openeuler:22.03-lts-sp4
 
 # maintainer
 MAINTAINER "rancococ" <rancococ@qq.com>
@@ -17,10 +17,10 @@ COPY docker-entrypoint.sh /
 
 # install repositories and packages : curl bash bash-completion passwd openssl openssh wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3
 RUN cp /etc/yum.repos.d/openEuler.repo /etc/yum.repos.d/openEuler.repo.backup && \
-    sed -i "s#repo.openeuler.org#mirrors.aliyun.com/openeuler#g" /etc/yum.repos.d/openEuler.repo && \
-    dnf clean all && dnf makecache && \
-    dnf install -y curl bash bash-completion passwd openssl openssh-server wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3 && \
-    dnf clean all && \rm -rf /var/lib/{cache,log} /var/log/lastlog && \
+    sed -i "s#http://repo.openeuler.org#https://mirrors.aliyun.com/openeuler#g" /etc/yum.repos.d/openEuler.repo && \
+    yum --disablerepo=debuginfo,source,update,update-source clean all && yum --disablerepo=debuginfo,source,update,update-source makecache && \
+    yum --disablerepo=debuginfo,source,update,update-source install -y curl bash bash-completion passwd openssl openssh-server wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3 && \
+    yum --disablerepo=debuginfo,source,update,update-source clean all && \rm -rf /var/lib/{cache,log} /var/log/lastlog && \
     ssh-keygen -q -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key -N '' && \
     ssh-keygen -q -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N '' && \
     ssh-keygen -t dsa -f /etc/ssh/ssh_host_ed25519_key  -N '' && \
