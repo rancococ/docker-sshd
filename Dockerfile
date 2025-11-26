@@ -15,12 +15,13 @@ ARG GOSU_URL=https://github.com/tianon/gosu/releases/download/1.19/gosu-amd64
 # copy script
 COPY docker-entrypoint.sh /
 
-# install repositories and packages : curl bash bash-completion passwd openssl openssh wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3
+# install repositories and packages : curl bash bash-completion passwd openssl openssh wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3 xz glibc-all-langpacks
 RUN cp /etc/yum.repos.d/openEuler.repo /etc/yum.repos.d/openEuler.repo.backup && \
     sed -i "s#http://repo.openeuler.org#https://mirrors.aliyun.com/openeuler#g" /etc/yum.repos.d/openEuler.repo && \
     yum --disablerepo=debuginfo,source,update,update-source clean all && yum --disablerepo=debuginfo,source,update,update-source makecache && \
-    yum --disablerepo=debuginfo,source,update,update-source install -y curl bash bash-completion passwd openssl openssh-server wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3 && \
+    yum --disablerepo=debuginfo,source,update,update-source install -y curl bash bash-completion passwd openssl openssh-server wget net-tools gettext zip unzip ncurses ncurses-compat-libs fontconfig dos2unix glibc libgcc libstdc++ libuv tar util-linux findutils htop iotop iftop iperf3 xz glibc-all-langpacks && \
     yum --disablerepo=debuginfo,source,update,update-source clean all && \rm -rf /var/lib/{cache,log} /var/log/lastlog && \
+    for d in /usr/lib/locale/*; do name="${d##*/}"; case "$name" in C|C.utf8|POSIX|zh_CN|zh_CN.utf8|en_US|en_US.utf8) : ;; *) rm -rf "$d" ;; esac; done && \
     ssh-keygen -q -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key -N '' && \
     ssh-keygen -q -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N '' && \
     ssh-keygen -t dsa -f /etc/ssh/ssh_host_ed25519_key  -N '' && \
